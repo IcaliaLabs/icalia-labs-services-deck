@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Icalia Labs — Services Overview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --icalia-coral: #E8453C;
+  --icalia-coral-hover: #D63A30;
+  --icalia-coral-light: #FDECEA;
+  --icalia-navy: #1A1A22;
+  --icalia-slate: #2D2F40;
+  --icalia-text-gray: #6B7280;
+  --icalia-white: #FFFFFF;
+  --icalia-beige-light: #FAF8F6;
+  --icalia-beige-mid: #F3F0EC;
+  --icalia-border: #E5E7EB;
+  --icalia-font-display: 'Instrument Serif', Georgia, 'Times New Roman', Times, serif;
+  --icalia-font-body: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --icalia-card-radius: 12px;
+  --icalia-card-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --icalia-button-radius: 48px;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  font-family: var(--icalia-font-body);
+  -webkit-font-smoothing: antialiased;
+  background: var(--icalia-navy);
+  color: var(--icalia-navy);
+}
+
+/* ── Deck & Slides ── */
+.deck { position: relative; width: 100%; height: 100%; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px 80px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.slide--top {
+  justify-content: flex-start;
+}
+.slide.is-active {
+  display: flex;
+  animation: fadeIn 0.35s ease-out;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Backgrounds */
+.slide--navy  { background: var(--icalia-navy);      color: var(--icalia-white); }
+.slide--light { background: var(--icalia-beige-light); color: var(--icalia-navy); }
+.slide--white { background: var(--icalia-white);      color: var(--icalia-navy); }
+.slide--beige { background: var(--icalia-beige-mid);  color: var(--icalia-navy); }
+
+/* ── Typography ── */
+.section-label {
+  font-family: var(--icalia-font-body);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--icalia-coral);
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-family: var(--icalia-font-display);
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.1;
+  margin-bottom: 24px;
+}
+h2 {
+  font-family: var(--icalia-font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 3.5vw, 48px);
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+.subtitle {
+  font-size: clamp(14px, 1.5vw, 18px);
+  line-height: 1.6;
+  max-width: 620px;
+}
+.slide--navy .subtitle { color: rgba(255,255,255,0.65); }
+.slide--light .subtitle,
+.slide--white .subtitle,
+.slide--beige .subtitle { color: var(--icalia-text-gray); }
+
+.coral { color: var(--icalia-coral); }
+.italic { font-style: italic; }
+
+/* ── Stats ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+.stat-number {
+  font-family: var(--icalia-font-display);
+  font-size: clamp(36px, 4vw, 56px);
+  color: var(--icalia-coral);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 13px; font-weight: 500;
+  line-height: 1.4; opacity: 0.7;
+}
+
+/* ── Cards ── */
+.card {
+  background: var(--icalia-white);
+  border: 1px solid var(--icalia-border);
+  border-radius: var(--icalia-card-radius);
+  padding: 28px 24px;
+  box-shadow: var(--icalia-card-shadow);
+}
+.slide--navy .card {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.08);
+  color: var(--icalia-white);
+}
+.card--accent { border-left: 4px solid var(--icalia-coral); }
+.card-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--icalia-coral); margin-bottom: 10px;
+}
+.card-title {
+  font-family: var(--icalia-font-display);
+  font-size: clamp(18px, 1.8vw, 22px);
+  margin-bottom: 10px; line-height: 1.25;
+}
+.card-text { font-size: 13px; line-height: 1.6; opacity: 0.75; }
+
+/* ── Grids ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; }
+.mt-section { margin-top: 32px; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: start; }
+
+/* ── Checklist ── */
+.checklist { list-style: none; padding: 0; }
+.checklist li {
+  font-size: 13px; line-height: 1.5;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.checklist li::before {
+  content: '→'; color: var(--icalia-coral);
+  font-weight: 700; flex-shrink: 0;
+}
+.slide--navy .checklist li { border-bottom-color: rgba(255,255,255,0.06); }
+
+/* ── Best-when callout ── */
+.best-when {
+  margin-top: 16px; padding: 14px 18px;
+  background: var(--icalia-coral-light);
+  border-radius: 8px; font-size: 13px; line-height: 1.5;
+}
+.best-when b {
+  color: var(--icalia-coral);
+  font-size: 10px; letter-spacing: 1px;
+  text-transform: uppercase;
+  display: block; margin-bottom: 4px;
+}
+.slide--navy .best-when {
+  background: rgba(232,69,60,0.12);
+  color: rgba(255,255,255,0.85);
+}
+
+/* ── Steps ── */
+.steps { display: flex; gap: 20px; margin-top: 32px; }
+.step {
+  flex: 1; position: relative;
+  padding: 24px 20px;
+  background: var(--icalia-white);
+  border-radius: var(--icalia-card-radius);
+  border: 1px solid var(--icalia-border);
+}
+.step-number {
+  font-family: var(--icalia-font-display);
+  font-size: 40px; color: var(--icalia-coral);
+  opacity: 0.22; position: absolute;
+  top: 16px; right: 18px;
+}
+.step-tag {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--icalia-coral); margin-bottom: 10px;
+}
+.step-title {
+  font-family: var(--icalia-font-display);
+  font-size: 20px; margin-bottom: 8px;
+}
+.step-text { font-size: 14px; line-height: 1.55; color: var(--icalia-text-gray); }
+.step-meta {
+  margin-top: 12px; font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--icalia-slate); opacity: 0.45;
+}
+
+/* ── Pain cards ── */
+.pain-card {
+  padding: 28px 24px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--icalia-card-radius);
+}
+.pain-icon {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(232,69,60,0.15);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px; color: var(--icalia-coral); font-size: 18px;
+}
+.pain-title {
+  font-family: var(--icalia-font-display);
+  font-size: 18px; margin-bottom: 8px;
+}
+.pain-text { font-size: 12px; line-height: 1.55; color: rgba(255,255,255,0.5); }
+
+/* ── Case cards ── */
+.case-card {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.case-industry {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--icalia-coral);
+}
+.case-name { font-family: var(--icalia-font-display); font-size: 22px; }
+.case-desc { font-size: 12px; line-height: 1.55; color: var(--icalia-text-gray); }
+.case-metrics { display: flex; gap: 20px; margin-top: auto; }
+.case-val { font-family: var(--icalia-font-display); font-size: 20px; color: var(--icalia-coral); }
+.case-lbl { font-size: 10px; color: var(--icalia-text-gray); line-height: 1.3; }
+
+/* ── Moat cards ── */
+.moat-card { display: flex; gap: 16px; padding: 24px; }
+.moat-num {
+  font-family: var(--icalia-font-display);
+  font-size: 32px; color: var(--icalia-coral);
+  opacity: 0.25; flex-shrink: 0; line-height: 1;
+}
+.moat-title { font-family: var(--icalia-font-display); font-size: 18px; margin-bottom: 6px; }
+.moat-text { font-size: 14px; line-height: 1.55; color: var(--icalia-text-gray); }
+
+/* ── Agent grid ── */
+.agent-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px; margin-top: 20px;
+}
+.agent-category {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  grid-column: 1 / -1;
+  margin-top: 12px; margin-bottom: 2px;
+}
+.agent-category:first-child { margin-top: 0; }
+.agent-row {
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.agent-name {
+  font-size: 11px; font-weight: 700;
+  color: var(--icalia-coral); margin-bottom: 3px;
+}
+.agent-desc { font-size: 10.5px; line-height: 1.35; color: rgba(255,255,255,0.5); }
+
+/* ── Outcome strip ── */
+.outcome-strip {
+  display: flex; gap: 36px; margin-top: 28px;
+  padding: 22px 28px;
+  background: rgba(232,69,60,0.08);
+  border-radius: var(--icalia-card-radius);
+  border: 1px solid rgba(232,69,60,0.15);
+}
+.outcome-num {
+  font-family: var(--icalia-font-display);
+  font-size: clamp(26px, 3vw, 40px);
+  color: var(--icalia-coral); line-height: 1;
+}
+.outcome-label { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.3; margin-top: 4px; }
+
+/* ── Clutch badge ── */
+.clutch-badge {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--icalia-card-radius);
+  padding: 12px 18px; margin-top: 16px;
+  text-decoration: none;
+  transition: border-color 0.2s;
+}
+.clutch-badge:hover { border-color: rgba(232,69,60,0.4); }
+.clutch-badge svg { flex-shrink: 0; width: 40px; height: 48px; }
+.clutch-text { font-size: 12px; font-weight: 600; color: var(--icalia-white); line-height: 1.3; }
+.clutch-sub { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+
+/* ── Credential boxes ── */
+.credential {
+  text-align: center; padding: 24px 16px;
+  background: var(--icalia-white);
+  border-radius: var(--icalia-card-radius);
+  border: 1px solid var(--icalia-border);
+}
+.credential-icon { margin-bottom: 12px; display: flex; justify-content: center; align-items: center; }
+.credential-title { font-family: var(--icalia-font-display); font-size: 16px; margin-bottom: 6px; }
+.credential-text { font-size: 14px; color: var(--icalia-text-gray); line-height: 1.35; }
+
+/* ── Logo row ── */
+.logo-row { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; margin-top: 20px; }
+
+/* ── Tagline bar ── */
+.tagline-bar {
+  display: flex; align-items: center; gap: 12px;
+  margin-top: 20px; font-size: 13px; font-weight: 500; opacity: 0.5;
+}
+.tagline-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--icalia-coral); }
+
+/* ── Dot-grid texture ── */
+.dot-grid {
+  position: absolute; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(232,69,60,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* ── Contact grid ── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 40px; }
+.contact-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--icalia-coral); margin-bottom: 8px;
+}
+.contact-value { font-size: 16px; line-height: 1.5; opacity: 0.8; }
+.contact-value a { color: inherit; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
+
+/* ── CTA button ── */
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 16px 32px;
+  background: var(--icalia-coral); color: var(--icalia-white);
+  border: none; border-radius: var(--icalia-button-radius);
+  font-family: var(--icalia-font-body);
+  font-size: 15px; font-weight: 600;
+  cursor: pointer; text-decoration: none;
+  transition: background 0.2s;
+}
+.cta-btn:hover { background: var(--icalia-coral-hover); }
+.cta-btn--outline {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  color: var(--icalia-white);
+}
+.cta-btn--outline:hover {
+  border-color: var(--icalia-coral);
+  background: rgba(232,69,60,0.08);
+}
+.slide--light .cta-btn--outline,
+.slide--white .cta-btn--outline,
+.slide--beige .cta-btn--outline {
+  border-color: var(--icalia-coral); color: var(--icalia-coral);
+}
+
+/* ── Progress bar ── */
+.progress-bar {
+  position: fixed; top: 0; left: 0;
+  height: 3px; background: var(--icalia-coral);
+  transition: width 0.35s ease; z-index: 200;
+}
+
+/* ── Slide counter ── */
+.slide-counter {
+  position: fixed; bottom: 28px; left: 32px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.4);
+  z-index: 200;
+}
+
+/* ── Navigation ── */
+.nav {
+  position: fixed; bottom: 22px; right: 32px;
+  display: flex; gap: 8px; z-index: 200;
+}
+.nav-btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(26,26,34,0.75);
+  backdrop-filter: blur(8px);
+  color: var(--icalia-white); font-size: 18px;
+  cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.nav-btn:hover { background: var(--icalia-coral); border-color: var(--icalia-coral); }
+.nav-btn:disabled { opacity: 0.25; cursor: default; }
+.nav-btn:disabled:hover {
+  background: rgba(26,26,34,0.75);
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* ── IL Mark ── */
+.il-mark {
+  position: fixed; top: 24px; left: 32px;
+  z-index: 200; width: 32px; height: 32px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 960px) {
+  .slide { padding: 40px 28px 60px; }
+  .split, .grid-2, .grid-3, .grid-4, .steps,
+  .agent-grid, .contact-grid, .outcome-strip {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .agent-grid { grid-template-columns: 1fr 1fr; }
+  .outcome-strip { flex-direction: column; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Fixed UI -->
+<div class="il-mark">
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <rect width="32" height="32" rx="4" fill="#E8453C"/>
+    <rect x="9" y="8" width="4" height="16" rx="1" fill="#fff"/>
+    <rect x="17" y="8" width="4" height="16" rx="1" fill="#fff"/>
+    <rect x="17" y="20" width="8" height="4" rx="1" fill="#fff"/>
+  </svg>
+</div>
+<div class="progress-bar" id="bar"></div>
+<div class="slide-counter" id="num">01 / 11</div>
+<div class="nav">
+  <button class="nav-btn" id="pb" onclick="go(-1)" disabled>‹</button>
+  <button class="nav-btn" id="nb" onclick="go(1)">›</button>
+</div>
+
+<div class="deck" id="deck">
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SLIDE 1 · COVER                       -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide--navy is-active">
+  <div class="dot-grid" style="bottom:0;right:0;width:400px;height:400px;opacity:0.35"></div>
+  <div class="section-label">Icalia Labs · Austin, TX · Monterrey, MX</div>
+  <h1>Nearshore engineers<br>who <span class="coral italic">multiply.</span></h1>
+  <p class="subtitle">Senior engineers and AI-native experts, embedded in your team. Same timezone, same standups, same bar — with the operational infrastructure that makes the relationship work.</p>
+  <div class="tagline-bar">
+    <span>Staff Augmentation</span><span class="tagline-dot"></span>
+    <span>Agentic Engineering & FDEs</span><span class="tagline-dot"></span>
+    <span>Est. 2012</span>
+  </div>
+  <div style="margin-top:40px;display:flex;gap:12px">
+    <a class="cta-btn" href="https://calendly.com/charlie-icalialabs/30min" target="_blank">Start the Conversation</a>
+    <a class="cta-btn cta-btn--outline" href="https://icalialabs.com" target="_blank">icalialabs.com →</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SLIDE 2 · AT A GLANCE                 -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide--light">
+  <div class="section-label">01 — At a Glance</div>
+  <h2>Built to embed<br>and <span class="coral italic">stay.</span></h2>
+  <p class="subtitle">A nearshore engineering firm that operates like an extension of your team — not a vendor you manage.</p>
+  <div class="stats-row">
+    <div>
+      <div class="stat-number">>90</div>
+      <div class="stat-label">Client NPS across<br>all engagements</div>
+    </div>
+    <div>
+      <div class="stat-number">210+</div>
+      <div class="stat-label">Platforms shipped<br>since 2012</div>
+    </div>
+    <div>
+      <div class="stat-number">&lt;.4%</div>
+      <div class="stat-label">Applicant acceptance<br>rate — senior+ bar</div>
+    </div>
+    <div>
+      <div class="stat-number">5+yr</div>
+      <div class="stat-label">Average engineer<br>tenure at Icalia</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SLIDE 3 · THE CHALLENGE                -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide--navy">
+  <div class="section-label">02 — The Challenge</div>
+  <h2>Growth stalls not from lack of ideas —<br>but because teams <span class="coral italic">can't scale fast enough.</span></h2>
+  <div class="grid-3 mt-section">
+    <div class="pain-card">
+      <div class="pain-icon">⏱</div>
+      <div class="pain-title">Slow hiring cycles</div>
+      <div class="pain-text">US in-house hiring takes 6–9 months at $200K–$250K loaded cost per engineer. Your roadmap can't wait.</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">🌍</div>
+      <div class="pain-title">Global complexity</div>
+      <div class="pain-text">Building entities abroad, EoR overhead, compliance — international hiring adds cost, risk, and legal friction.</div>
+    </div>
+    <div class="pain-card">
+      <div class="pain-icon">🤖</div>
+      <div class="pain-title">AI readiness gap</div>
+      <div class="pain-text">70% of tech leaders report talent shortages slowing AI adoption. The engineers you need build with AI — not wait for it.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SLIDE 4 · STAFF AUGMENTATION           -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide--light">
+  <div class="section-label">03 — Primary Service</div>
+  <div class="split">
+    <div>
+      <h2>Nearshore Staff <span class="coral italic">Augmentation</span></h2>
+      <p class="subtitle" style="max-width:100%">Senior engineers embedded directly inside your team — your roadmap, your standups, our people. An extension of your engineering org, not an agency.</p>
+      <div class="best-when" style="margin-top:20px">
+        <b>Best when</b>
+        You need to scale engineering capacity due to clarity on product strategy. You have the roadmap — you need the hands.
+      </div>
+    </div>
+    <div>
+      <div class="card card--accent" style="margin-bottom:18px">
+        <div class="card-label">What you get</div>
+        <ul class="checklist">
+          <li>Time &amp; materials, scale up or down monthly</li>
+          <li>Engineers report into your org — we don't sit between you</li>
+          <li>Rituals, code review, and engineering culture included</li>
+          <li>Account Manager as single point of contact</li>
+          <li>Head of Delivery + fractional CTO behind every engineer</li>
+          <li>Replacement pipeline that moves in days, not weeks</li>
+          <li>AI-augmented workflows by default</li>
+        </ul>
+      </div>
+      <div style="display:flex;gap:28px">
+        <div>
+          <div class="stat-number" style="font-size:28px">4–8wk</div>
+          <div class="stat-label">Avg. time to<br>first engineer</div>
+        </div>
+        <div>
+          <div class="stat-number" style="font-size:28px">95%</div>
+          <div class="stat-label">Engineer<br>retention rate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SLIDE 5 · SUCCESS STORIES             -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide--white slide--top">
+  <div class="section-label">Success Stories</div>
+  <h2>Proof of Engagements —<br>that <span class="coral italic">scaled with trust.</span></h2>
+  <div class="grid-2 mt-section">
+    <div class="card case-card">
+      <div class="case-industry">Energy · 5+ years</div>
+      <div class="case-name">RTS (acquired)</div>
+      <div class="case-desc">Monterrey squad embedded with a Central Texas oil-and-gas operator. Five-year modernization, successful acquisition.</div>
+      <div class="case-metrics">
+        <div><div class="case-val">3x</div><div class="case-lbl">ROE on tech</div></div>
+        <div><div class="case-val">5/5</div><div class="case-lbl">Client NPS</div></div>
+      </div>
+    </div>
+    <div class="card case-card">
+      <div class="case-industry">Prof. Services · 5+ years</div>
+      <div class="case-name">Point B</div>
+      <div class="case-desc">Product squads across multiple consultancy tracks. Generated value-add revenue on top of existing client rates.</div>
+      <div class="case-metrics">
+        <div><div class="case-val">40%+</div><div class="case-lbl">Value-add revenue</div></div>
+        <div><div class="case-val">Multi</div><div class="case-lbl">Tracks embedded</div></div>
+      </div>
+    </div>
+    <div class="card case-card">
+      <div class="case-industry">Consumer · 5+ years</div>
+      <div class="case-name">Everlance (acquired)</div>
+      <div class="case-desc">Eight senior engineers placed alongside a San Francisco team. Full team retained through the Motus acquisition.</div>
+      <div class="case-metrics">
+        <div><div class="case-val">60%</div><div class="case-lbl">Cost savings vs SF</div></div>
+        <div><div class="case-val">100%</div><div class="case-lbl">Retention thru acq.</div></div>
+      </div>
+    </div>
+    <div class="card case-card">
+      <div class="case-industry">Healthcare · 4+ years</div>
+      <div class="case-name">EMR Bear (acquired)</div>
+      <div class="case-desc">Four specialized RoR engineers in a HIPAA-regulated environment. Critical features shipped in four weeks.</div>
+      <div class="case-metrics">
+        <div><div class="case-val">4wk</div><div class="case-lbl">To first ship</div></div>
+        <div><div class="case-val">4</div><div class="case-lbl">Specialized eng.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SLIDE 7 · AGENTIC ENGINEERING         -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide--navy">
+  <div class="section-label">04 — Expert Service</div>
+  <div class="split">
+    <div>
+      <h2>Agentic Engineering &amp;<br><span class="coral italic">High-Touch Consultancy</span></h2>
+      <p class="subtitle" style="max-width:100%">AI-Native engineering consultants building agents, autonomous systems, human-agent augmentation, and the hard architectural calls. Judgement work — not throughput work. Pairs naturally on top of strategists.</p>
+      <div class="best-when" style="margin-top:20px">
+        <b>Best when</b>
+        The problem is novel and the bar for taste is high. You need someone who's solved it before.
+      </div>
+      <a href="https://clutch.co/mx/developers/artificial-intelligence" target="_blank" rel="noopener" class="clutch-badge">
+        <svg viewBox="0 0 80 96" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="40,2 74,22 74,74 40,94 6,74 6,22" fill="#FAF8F6" stroke="#1C2333" stroke-width="2"/>
+          <text x="40" y="20" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" font-weight="700" fill="#1C2333">TOP</text>
+          <text x="40" y="30" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" font-weight="700" fill="#1C2333">AI COMPANIES</text>
+          <rect x="12" y="40" width="56" height="16" fill="#1C2333"/>
+          <text x="40" y="52" text-anchor="middle" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#FAF8F6" font-style="italic">Clutch</text>
+          <text x="40" y="72" text-anchor="middle" font-family="Arial,sans-serif" font-size="6.5" font-weight="600" fill="#1C2333">MEXICO</text>
+          <text x="40" y="83" text-anchor="middle" font-family="Arial,sans-serif" font-size="9" font-weight="700" fill="#1C2333">2024</text>
+        </svg>
+        <div>
+          <div class="clutch-text">Leading <span style="color:var(--icalia-coral)">AI</span> in LatAm</div>
+          <div class="clutch-sub">Top AI Companies · Mexico 2024</div>
+        </div>
+      </a>
+    </div>
+    <div>
+      <div class="card card--accent" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.07);color:var(--icalia-white)">
+        <div class="card-label">Capabilities</div>
+        <ul class="checklist" style="color:rgba(255,255,255,0.8)">
+          <li style="border-bottom-color:rgba(255,255,255,0.05)">Autonomous agent architecture &amp; orchestration</li>
+          <li style="border-bottom-color:rgba(255,255,255,0.05)">Multi-agent systems (fleet coordination, health, lifecycle)</li>
+          <li style="border-bottom-color:rgba(255,255,255,0.05)">AI-augmented DevOps &amp; CI/CD automation</li>
+          <li style="border-bottom-color:rgba(255,255,255,0.05)">Production monitoring → auto-remediation pipelines</li>
+          <li style="border-bottom-color:rgba(255,255,255,0.05)">UX strategy and product direction</li>
+          <li style="border-bottom-color:transparent">Same T&amp;M model, expert price band</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SLIDE 8 · AGENTIC PROOF               -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide--navy slide--top">
+  <div class="dot-grid" style="top:0;right:0;width:300px;height:300px;opacity:0.25"></div>
+  <div class="section-label">Agentic Engineering · Proof</div>
+  <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:6px">
+    <h2 style="margin-bottom:0">opensop-worker</h2>
+    <span style="font-size:12px;opacity:0.35">Built for Coba (YC-backed)</span>
+  </div>
+  <p class="subtitle" style="margin-bottom:8px">A fleet of 13 autonomous agents managing production errors, PRs, dependencies, CI, merge conflicts, and dev chat — handling routine work automatically, flagging what needs human judgment.</p>
+
+  <div class="agent-grid">
+    <div class="agent-category">🛠 Doers — action on code &amp; PRs</div>
+    <div class="agent-row"><div class="agent-name">AppSignal responder</div><div class="agent-desc">Error → auto fix PR</div></div>
+    <div class="agent-row"><div class="agent-name">PR reviewer</div><div class="agent-desc">Score, merge, or flag</div></div>
+    <div class="agent-row"><div class="agent-name">Dependabot responder</div><div class="agent-desc">Auto-merge dep bumps</div></div>
+    <div class="agent-row"><div class="agent-name">Auto-merger</div><div class="agent-desc">Merge after 24h green</div></div>
+    <div class="agent-row"><div class="agent-name">Conflict resolver</div><div class="agent-desc">Clear merge conflicts</div></div>
+    <div class="agent-row"><div class="agent-name">CI fixer</div><div class="agent-desc">Rerun or fix CI</div></div>
+    <div class="agent-row"><div class="agent-name">Stale-PR responder</div><div class="agent-desc">Nudge, rebase, or close</div></div>
+    <div class="agent-row"><div class="agent-name">Slack cook</div><div class="agent-desc">Actions via Slack</div></div>
+
+    <div class="agent-category">📣 Communicators</div>
+    <div class="agent-row"><div class="agent-name">Daily digest</div><div class="agent-desc">2×/day Slack roll-up</div></div>
+    <div class="agent-row"><div class="agent-name">Release notes gen.</div><div class="agent-desc">Auto changelog entries</div></div>
+    <div class="agent-row"><div class="agent-name">Agent indexer</div><div class="agent-desc">Weekly docs refresh</div></div>
+
+    <div class="agent-category">🩺 Maintainers</div>
+    <div class="agent-row"><div class="agent-name">Health monitor</div><div class="agent-desc">Hourly fleet check</div></div>
+    <div class="agent-row"><div class="agent-name">Reaper</div><div class="agent-desc">Kill zombie processes</div></div>
+  </div>
+
+  <div class="outcome-strip">
+    <div><div class="outcome-num">13</div><div class="outcome-label">Autonomous agents<br>in production</div></div>
+    <div><div class="outcome-num">↓ 8 hrs/wk</div><div class="outcome-label">Reduced manual engineering<br>overhead on routine tasks</div></div>
+    <div><div class="outcome-num">↑ 15% revenue</div><div class="outcome-label">Engineers freed to ship<br>product, not babysit infra</div></div>
+    <div><div class="outcome-num">< 20 mins</div><div class="outcome-label">From production error<br>to fix PR opened</div></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SLIDE 9 · HOW WE SCALE                -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide--beige">
+  <div class="section-label">05 — How We Scale With You</div>
+  <h2>Start light. <span class="coral italic">Grow with us</span><br>when the scope grows.</h2>
+  <p class="subtitle">Same team, same playbook, same rates. No backlog or internal PM required to start.</p>
+  <div class="steps">
+    <div class="step">
+      <!--div class="step-number">01</!--div-->
+      <div class="step-tag">Exploration & Automation</div>
+      <div class="step-title">Fractional SME / FDE</div>
+      <div class="step-text">One senior, part-time. Running discovery, architecting the path, and shipping first outcomes alongside your leadership team.</div>
+      <div class="step-meta">~15 hrs/wk · No backlog required</div>
+    </div>
+    <!--div class="step" style="border-left:3px solid var(--icalia-coral)">
+      <div class="step-number">02</div>
+      <div class="step-tag">When scope grows</div>
+      <div class="step-title">Embedded Pod</div>
+      <div class="step-text">Same SME stays; we add senior engineers under their lead. Velocity multiplies — one point of contact stays constant.</div>
+      <div class="step-meta">Full-time · Monthly scale up/down</div>
+    </div-->
+    <div class="step" style="border-left:3px solid var(--icalia-coral)">
+      <!--div class="step-number">02</!--div-->
+      <div class="step-tag">Clear roadmap ahead</div>
+      <div class="step-title">Dedicated Squad</div>
+      <div class="step-text">Full embedded engineering squad with our support infrastructure, sourced in LatAm. Your team, your rituals.</div>
+      <div class="step-meta">Times &amp; Materials · Single invoice</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SLIDE 9 · THE MOAT                    -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide--light slide--top">
+  <div class="section-label">06 — The Moat</div>
+  <h2>Why we are different, in<br><span class="coral italic">four anchors.</span></h2>
+  <p class="subtitle" style="margin-bottom:8px">We're not the cheapest staff augmentation provider. <br />We're the <b>most accountable one.</b></p>
+  <div class="grid-2 mt-section">
+    <div class="card moat-card">
+      <div class="moat-num">01</div>
+      <div><div class="moat-title">Proactive risk identification</div><div class="moat-text">We document risks to your product and surface them before you do. Written summaries, concrete recommendations.</div></div>
+    </div>
+    <div class="card moat-card">
+      <div class="moat-num">02</div>
+      <div><div class="moat-title">Delivery follow-up</div><div class="moat-text">We don't place engineers and disappear. Head of Delivery and Client Ops monitor output and integration quality for the engagement life.</div></div>
+    </div>
+    <div class="card moat-card">
+      <div class="moat-num">03</div>
+      <div><div class="moat-title">Fast replacement</div><div class="moat-text">Transition proposed within days. The warm pipeline is maintained internally — replacement is a feature.</div></div>
+    </div>
+    <div class="card moat-card">
+      <div class="moat-num">04</div>
+      <div><div class="moat-title">AI-first with Compliance</div><div class="moat-text">Engineers leverage AI tools while adhering to strict compliance standards, ensuring both alignment to industry best practices and security.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SLIDE 10 · CREDENTIALS                -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide--beige">
+  <div class="section-label">07 — Credentials</div>
+  <h2>The receipts,<br>not just the <span class="coral italic">pitch.</span></h2>
+  <div class="grid-4 mt-section">
+    <div class="credential">
+      <div class="credential-icon">
+        <svg width="40" height="40" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+          <rect width="36" height="36" rx="4" fill="#FB651E"/>
+          <path d="M10 8L18 22V28H18V22L26 8H22.5L18 16.5L13.5 8H10Z" fill="white"/>
+        </svg>
+      </div>
+      <div class="credential-title">YC Alum</div>
+      <div class="credential-text">Founding team previously backed by Y Combinator.</div>
+    </div>
+    <div class="credential">
+      <div class="credential-icon"><span style="font-size:28px">🐳</span></div>
+      <div class="credential-title">Docker Certified</div>
+      <div class="credential-text">First consultancy in LatAm to earn Docker certification.</div>
+    </div>
+    <div class="credential">
+      <div class="credential-icon">
+        <svg width="36" height="36" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6C29.304 70.67 17.9 66.348 17.9 47.243c0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.57 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 19.187-11.566 23.345-22.61 24.567 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="#1A1A22"/>
+        </svg>
+      </div>
+      <div class="credential-title">GitHub Partner</div>
+      <div class="credential-text">Recognized GitHub Partner in Latin America.</div>
+    </div>
+    <div class="credential">
+      <div class="credential-icon"><span style="font-size:28px">⭐</span></div>
+      <div class="credential-title">5K+ OSS Stars</div>
+      <div class="credential-text">Active open-source maintainers across public repos.</div>
+    </div>
+  </div>
+  <div style="margin-top:32px">
+    <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--icalia-coral);margin-bottom:14px">Trusted By</div>
+        <div class="logo-row">
+      <svg class="h-full w-auto" viewBox="0 0 280 45" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" alt="Toyota" style="height:24px;width:auto;opacity:0.3">
+        <path d="M126.242 24.9601C126.263 17.2988 132.518 11.1047 140.221 11.1454C147.882 11.1658 154.015 17.4211 153.995 25.1434C153.975 32.7232 147.739 38.9377 140.159 38.9377C132.437 38.9377 126.202 32.6824 126.242 24.9601ZM147.964 25.1434C147.964 25.1434 148.127 25.1027 148.188 25.0823C147.801 23.6968 147.597 22.2094 147.006 20.9257C144.642 15.791 138.407 14.7723 134.678 18.827C131.642 22.1279 131.561 27.6496 134.474 31.0524C137.429 34.4755 142.116 34.6996 145.355 31.5414C147.128 29.7891 147.902 27.6089 147.984 25.1638L147.964 25.1434Z" fill="currentColor"></path>
+        <path d="M208.757 25.0008C208.757 32.7028 202.543 38.9377 194.881 38.9173C187.22 38.897 180.984 32.6824 180.984 25.0008C180.984 17.3396 187.24 11.1046 194.922 11.125C202.563 11.125 208.757 17.36 208.757 25.0008ZM187.057 25.0008C187.057 26.9772 187.566 28.6684 188.625 30.2577C191.662 34.7811 197.713 34.9237 200.933 30.5226C203.235 27.4051 203.276 22.8614 201.055 19.6828C197.815 15.0779 191.6 15.2001 188.544 19.9069C187.525 21.4554 187.057 23.167 187.057 25.0008Z" fill="currentColor"></path>
+        <path d="M259.682 38.306C257.583 38.306 255.586 38.3264 253.589 38.2857C253.345 38.2857 252.957 37.9597 252.856 37.6948C252.163 36.0036 251.531 34.2921 250.899 32.5805C250.716 32.0915 250.472 31.8877 249.942 31.8877C246.763 31.9081 243.584 31.9081 240.406 31.8877C239.855 31.8877 239.631 32.0915 239.448 32.5805C238.857 34.2513 238.185 35.8813 237.594 37.5521C237.39 38.1023 237.145 38.3468 236.514 38.3264C234.578 38.2857 232.663 38.3264 230.625 38.3264C231.603 35.9221 232.52 33.64 233.457 31.358C235.984 25.1842 238.511 19.0307 240.997 12.8569C241.241 12.2253 241.567 12.0215 242.239 12.0419C244.297 12.0826 246.356 12.0623 248.393 12.0419C248.841 12.0419 249.086 12.1642 249.269 12.6124C252.672 20.9868 256.095 29.3815 259.519 37.7559C259.58 37.8985 259.62 38.0615 259.702 38.3264L259.682 38.306ZM248.821 27.1402C247.619 23.982 246.457 20.9053 245.296 17.8489C245.235 17.8489 245.153 17.8489 245.092 17.8489C243.931 20.9257 242.749 23.982 241.547 27.1606H248.821V27.1402Z" fill="currentColor"></path>
+        <path d="M170.553 38.2857H164.684V37.3484C164.684 34.6792 164.705 32.01 164.684 29.3408C164.684 28.8314 164.521 28.2813 164.256 27.8534C161.159 22.9633 158.021 18.0935 154.904 13.2034C154.7 12.8774 154.517 12.5513 154.211 12.042C155.291 12.042 156.228 12.042 157.165 12.042C158.408 12.042 159.835 11.6956 160.813 12.2253C161.75 12.7347 162.198 14.1406 162.85 15.1594C164.419 17.6045 166.009 20.0699 167.639 22.6373C168.454 21.374 169.228 20.2126 169.982 19.0308C171.347 16.8913 172.713 14.7723 174.057 12.6328C174.322 12.205 174.628 12.0216 175.137 12.042C177.073 12.0827 179.009 12.042 181.108 12.042C180.333 13.2645 179.641 14.3648 178.948 15.4447C176.258 19.6624 173.548 23.8802 170.879 28.0979C170.675 28.4239 170.573 28.8722 170.573 29.2797C170.553 31.9489 170.573 34.6181 170.573 37.2873C170.573 37.593 170.573 37.8986 170.573 38.2654L170.553 38.2857Z" fill="currentColor"></path>
+        <path d="M110.915 17.0747H102.602V12.103H124.995V17.0543H116.783V38.2449H110.895V17.0747H110.915Z" fill="currentColor"></path>
+        <path d="M217.874 17.0544H209.602V12.1235H231.975V17.0747H223.783V38.2654H217.895V17.0544H217.874Z" fill="currentColor"></path>
+        <path d="M85.3184 17.9917C83.831 12.5717 80.1225 8.78188 75.4359 5.90892C68.6099 1.73193 61.0706 0.285258 53.1646 0C50.0878 0.346385 46.9906 0.529766 43.9342 1.05953C37.373 2.20056 31.362 4.66601 26.4105 9.2709C18.6064 16.5246 18.2396 27.1607 25.5343 34.9238C28.6927 38.2858 32.5846 40.5882 36.884 42.1775C45.3809 45.2746 54.0816 45.7228 62.9045 44.0113C69.16 42.8091 74.9061 40.4456 79.6131 36.0648C84.8905 31.1543 87.2949 25.1842 85.3388 17.9917H85.3184ZM69.9751 6.58132C70.8105 7.02958 71.6459 7.57972 72.3387 8.21137C73.9281 9.65803 73.9688 11.4103 72.461 12.9385C71.8293 13.5905 71.055 14.161 70.2603 14.5889C67.6318 15.9745 64.7587 16.545 61.8246 16.9321C61.0503 17.034 60.7446 16.8099 60.6224 15.9745C60.3982 14.2833 60.0926 12.5717 59.6647 10.9213C58.9311 8.00761 57.8919 5.23653 55.1411 3.07672C60.5408 3.4231 65.4312 4.23812 69.9343 6.60169L69.9751 6.58132ZM55.1004 9.49503C56.8935 11.7363 57.3825 14.4463 57.8919 17.2989H48.3966C48.8041 14.4055 49.4154 11.7363 51.1474 9.49503C52.3903 7.88536 53.837 7.88536 55.1207 9.49503H55.1004ZM33.7256 8.39475C34.2554 7.86498 34.8667 7.39634 35.4984 7.00921C40.1849 4.27888 45.3605 3.4231 50.964 3.05634C46.7053 6.90733 46.2774 11.9197 45.3809 16.9729C44.4436 16.8506 43.4655 16.871 42.5689 16.6061C40.1442 15.8726 37.7194 15.0779 35.3354 14.161C34.6018 13.8758 33.9701 13.183 33.4404 12.5514C32.3197 11.1658 32.4215 9.63766 33.7052 8.39475H33.7256ZM27.9999 30.38C24.5155 25.3065 24.3525 19.8051 27.2256 14.3037C27.5516 13.6924 27.9999 13.1423 28.5093 12.3884C29.3651 16.0152 31.8103 18.012 34.7852 19.1938C37.7601 20.3756 40.8981 21.1499 44.0157 21.9445C44.9733 22.189 45.2179 22.4947 45.2179 23.3912C45.2586 28.098 45.605 32.8047 47.5408 37.1855C48.2947 38.9174 49.4969 40.4252 50.5157 42.096C41.6113 41.1791 33.42 38.3265 27.9795 30.4004L27.9999 30.38ZM50.7602 33.6401C50.047 32.7436 49.4969 31.6433 49.1301 30.5634C48.2336 28.0164 48.0298 25.3472 48.0909 22.6169H58.1364C58.1364 26.5087 58.0142 30.3393 55.5486 33.5994C54.1834 35.4128 52.1866 35.4332 50.7602 33.6401ZM74.0503 35.0868C69.323 39.06 63.7399 41.0772 57.6678 41.8515C56.8935 41.9534 56.0988 42.0145 55.0189 42.1164C58.3606 39.3249 59.5017 35.7592 60.1537 32.0508C60.6427 29.2186 60.8057 26.3049 61.0095 23.4319C61.0706 22.4743 61.3151 22.1075 62.334 21.9445C66.3277 21.3129 70.2196 20.2941 73.6428 18.0324C75.9046 16.545 77.0049 15.0779 77.7384 12.4495C79.4704 14.6093 80.4689 16.9525 80.7949 19.5606C81.6507 26.0808 78.8388 31.0524 74.0503 35.0868Z" fill="currentColor"></path>
+      </svg>
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNDUgNDUiIGZpbGw9Im5vbmUiPjxwYXRoIGQ9Ik00MS45NTk0IDE5LjY4MjhIMjIuMjg5MlYyNi4wODgxSDM0Ljk4MjJDMzQuODA0OSAyNy4wMzIgMzQuNDgwNyAyNy45NDIyIDM0LjAyMTMgMjguNzg1NUMzMy4xNjM2IDMwLjMwNDkgMzEuNzk5NSAzMS40NTUgMjkuOTI5IDMyLjIzNThDMjguMjUxNCAzMi45MzQ0IDI2LjEzNTEgMzMuMjkxNyAyMy41ODcgMzMuMzY2MkMyMS4xMzMyIDMzLjMyNDEgMTkuMDIzIDMyLjk0NzIgMTcuMjU2NCAzMi4yMzU4QzE1LjM4ODkgMzEuNDczMSAxNC4wMjI1IDMwLjMzODEgMTMuMTU3MyAyOC44MzA4QzEyLjI5MjEgMjcuMzIzNCAxMS44NTk1IDI1LjIyMTUgMTEuODU5NSAyMi41MjQ5QzExLjg1OTUgMTkuODM4OCAxMi4yODgzIDE3LjczNTMgMTMuMTQ2IDE2LjIxNDVDMTQuMDAzNyAxNC42OTM2IDE1LjM2ODUgMTMuNTQzNSAxNy4yNDA1IDEyLjc2NDJDMTguOTE4MiAxMi4wNjU2IDIxLjAzNDUgMTEuNzA4MyAyMy41NzEyIDExLjYzMzdDMjYuMDI1MSAxMS42Nzc0IDI4LjEzNTIgMTIuMDU0MyAyOS45MDE4IDEyLjc2NDJDMzEuMDkxNiAxMy4yMjQ3IDMyLjE2NDMgMTMuOTQzNyAzMy4wNDIzIDE0Ljg2OTFINDIuNDExNkM0Mi4xODcgMTQuMjQ5MSA0MS45MjExIDEzLjY0NDkgNDEuNjE1NyAxMy4wNjA0QzQwLjI1OTIgMTAuNDc4NCAzOC4wNjA4IDguNDkwOTUgMzUuMDIwNiA3LjA5ODE5QzMxLjk4MDQgNS43MDU0MyAyOC40NDU4IDUuMDA2MDMgMjQuNDE2OCA1SDIzLjU4MjVDMTkuNTgwNiA1LjA2MzMxIDE2LjA5ODggNS43MTM3MSAxMy4xMzY5IDYuOTUxMjNDMTAuMDE5OSA4LjI1OTU4IDcuNjM4MzUgMTAuMTc2MSA1Ljk5MjM5IDEyLjcwMDlDNC4zNDY0MiAxNS4yMjU3IDMuNTIzNDQgMTguNTAwMyAzLjUyMzQ0IDIyLjUyNDlDMy41MjM0NCAyNi4yMjY5IDQuMjAxNzIgMjkuMzY4MSA1LjU1ODI5IDMxLjk0ODZDNi45MTQ4NSAzNC41MjkyIDkuMTEzMjMgMzYuNTE2NiAxMi4xNTM0IDM3LjkxMDlDMTUuMTkzNyAzOS4zMDM2IDE4LjcyMyA0MCAyMi43NDE0IDQwSDIzLjU3NTdDMjcuNTc3NiAzOS45MzY2IDMxLjA1OTUgMzkuMjg2MyAzNC4wMjEzIDM4LjA0ODdDMzcuMTM2OCAzNi43Mzg5IDM5LjUxODQgMzQuODIyMyA0MS4xNjU5IDMyLjI5OTFDNDIuODEzMyAyOS43NzU4IDQzLjYzNjMgMjYuNTAxMSA0My42MzQ4IDIyLjQ3NTFDNDMuNjM3MSAyMS41NDI1IDQzLjU4OTUgMjAuNjEwMyA0My40OTIzIDE5LjY4MjhINDEuOTU5NFoiIGZpbGw9IiMxQTFBMjIiLz48cGF0aCBkPSJNODcuNDQ4OCAyMy45MTM2Qzg2LjY1NDEgMjMuMjM1IDg1Ljc1NjYgMjIuNjg3MSA4NC43ODk5IDIyLjI5MDFDODMuODUzMiAyMS44NzY3IDgyLjg1NDggMjEuNjIgODEuODM0OCAyMS41MzA1QzgyLjkxNTcgMjEuMzYzMyA4My45MzEyIDIwLjkwNzEgODQuNzc0MSAyMC4yMTAxQzg1LjY1OCAxOS41MTMyIDg2LjMzNzYgMTguNTkwNyA4Ni43NDExIDE3LjUzOTlDODcuMTY0NCAxNi4zOTk2IDg3LjM3MTUgMTUuMTkwNCA4Ny4zNTE2IDEzLjk3NDNDODcuMzUxNiAxMS4wOTIzIDg2LjM1NjcgOC45NjQ3MSA4NC4zNjcxIDcuNTkxNTRDODIuMzc3NSA2LjIxODM3IDc5LjczMyA1LjUzNTU2IDc2LjQzMzQgNS41NDMwOUg1MC44NTU1VjM5LjQ1NzhINzcuNzQwM0M4MC40NDQ0IDM5LjQ1NzggODIuNzA1MyAzOS4wOTIzIDg0LjUyMzEgMzguMzYxMkM4Ni4zNDA5IDM3LjYzMDIgODcuNjY3MyAzNi41NTAyIDg4LjUwMjQgMzUuMTIxMkM4OS4zMzkgMzMuNjkzOCA4OS43NTc0IDMxLjk4MTUgODkuNzU3NCAyOS45ODQzQzg5Ljc3MiAyOC43ODY1IDg5LjU3MjUgMjcuNTk1NyA4OS4xNjcxIDI2LjQ2ODVDODguODI1MyAyNS40ODIgODguMjM2OCAyNC41OTk1IDg3LjQ1NzggMjMuOTA0NUw4Ny40NDg4IDIzLjkxMzZaTTU4Ljg2MTUgMTEuOTIxM0g3My44MzU3Qzc1LjAyOTQgMTEuOTIxMyA3NS45NjQ3IDEyLjA0NzkgNzYuNjQxNSAxMi4zMDEyQzc3LjMwMTMgMTIuNTQwNiA3Ny44Njc1IDEyLjk4NDEgNzguMjU4IDEzLjU2NzNDNzguNjU2NSAxNC4xNTEzIDc4Ljg2NjMgMTQuODQzMyA3OC44NTk1IDE1LjU1MDJDNzguODU5NSAxNi44MTYzIDc4LjUxODEgMTcuNzU1NCA3Ny44MzUzIDE4LjM2NzNDNzcuMTUyNCAxOC45NzkzIDc2LjAwODQgMTkuMjg1MyA3NC40MDMyIDE5LjI4NTNINTguODUyNEw1OC44NjE1IDExLjkyMTNaTTgwLjU2NjUgMzEuNTU4QzgwLjA2NDYgMzIuMTAyNCA3OS40MTYgMzIuNDkwMyA3OC42OTkgMzIuNjc0OUM3Ny42NzU1IDMyLjkzNTIgNzYuNjIwOSAzMy4wNTIzIDc1LjU2NTMgMzMuMDIzSDU4Ljg1MjRWMjUuNjAyNUg3NS43MzQ4Qzc3LjYwOTkgMjUuNjAyNSA3OC45OTU5IDI1LjkwNCA3OS44OTI3IDI2LjUwN0M4MC43ODk1IDI3LjEwOTggODEuMjQxNyAyOC4wNDg5IDgxLjI0OTIgMjkuMzI0MUM4MS4yNDkyIDMwLjMwNjkgODEuMDIzMiAzMS4wNTYgODAuNTcxIDMxLjU3MTUiIGZpbGw9IiMxQTFBMjIiLz48cGF0aCBkPSJNMTMxLjExNiA1LjUzMjI5TDExOS4xOTIgMzEuMzgyMUwxMDcuNTIgNS41MzIyOUg5Ni45Njg4VjM5LjQ2NUgxMDQuNzM1VjE2LjgyMTNMMTE1LjAzMyAzOS40NjVIMTIzLjA3M0wxMzMuNjY4IDE2LjgyMTNWMzkuNDY1SDE0MS40NzVWNS41MzIyOUgxMzEuMTE2WiIgZmlsbD0iIzFBMUEyMiIvPjwvc3ZnPg==" alt="GBM" style="height:24px;width:auto;opacity:0.3">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNDUiIGZpbGw9Im5vbmUiPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNDYuODEwNSAxMy40NTczQzQxLjY1MDEgMTMuNDU3MyA0MC44MjgyIDE3Ljg5MzQgNDAuODI4MiAyMi41MjRDNDAuODI4MiAyNy4xNTM4IDQxLjY1MDEgMzEuNTkzMiA0Ni44MTA1IDMxLjU5MzJDNTEuOTcxNiAzMS41OTMyIDUyLjc0MTMgMjcuMTUzOCA1Mi43NDEzIDIyLjUyNEM1Mi43NDEzIDE3Ljg5MzQgNTEuOTcxNiAxMy40NTczIDQ2LjgxMDUgMTMuNDU3M1pNNTMuMzIxNSAzMi42MDU0QzUyLjA2NTkgMzMuODU5MyA0OS45NDM5IDM0LjY4MDMgNDcuNTMyMSAzNC42ODAzQzQ0LjkzMDEgMzQuNjgwMyA0Mi43NTkyIDM0LjA1MjkgNDAuODI4MiAzMS41OTMyVjQ1SDM3LjM1NTVWMTAuNjU5MUg0MC44MjgyVjEzLjQ1NzNDNDIuNzU5MiAxMC45NTA0IDQ0LjkyOTIgMTAuMzcxMSA0Ny41MzEzIDEwLjM3MTFDNDkuOTQzOSAxMC4zNzExIDUyLjA2NTkgMTEuMTg5NiA1My4zMjE1IDEyLjQ0NTFDNTUuNzMzMiAxNC44NTUyIDU2LjIxNDEgMTguODEwNCA1Ni4yMTQxIDIyLjUyNEM1Ni4yMTQxIDI2LjIzNjcgNTUuNzMzMiAzMC4xOTM3IDUzLjMyMTUgMzIuNjA1NFoiIGZpbGw9IiMxQTFBMjIiLz48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTczLjczMjEgMTUuMTkyOEM3Mi42MjM5IDE0LjA4NDcgNzEuMDgxMiAxMy40NTczIDY5LjM5MTEgMTMuNDU3M0M2Ny43MDM1IDEzLjQ1NzMgNjYuMjA5NyAxNC4wODQ3IDY1LjA5OTggMTUuMTkyQzYzLjM2MzQgMTYuOTMwOSA2My4xNzE0IDE5Ljg3MzEgNjMuMTcxNCAyMi41MjQ4QzYzLjE3MTQgMjUuMTc3NCA2My4zNjM0IDI4LjExOTYgNjUuMDk5OCAyOS44NTZDNjYuMjA5NyAzMC45NjUgNjcuNzAzNSAzMS41OTMyIDY5LjM5MTEgMzEuNTkzMkM3MS4wODEyIDMxLjU5MzIgNzIuNjI0NyAzMC45NjUgNzMuNzMyMSAyOS44NTZDNzUuNDY5MyAyOC4xMTk2IDc1LjYxNDEgMjUuMTc3NCA3NS42MTQxIDIyLjUyNDhDNzUuNjE0MSAxOS44NzIzIDc1LjQ2OTMgMTYuOTMwOSA3My43MzIxIDE1LjE5MjhaTTc2LjE5NDMgMzEuOTc4OUM3NC41NTMxIDMzLjYxNTkgNzIuMjg3IDM0LjY4MDMgNjkuMzkxMSAzNC42ODAzQzY2LjQ5NzcgMzQuNjgwMyA2NC4yMzE2IDMzLjYxNTkgNjIuNTkyMSAzMS45Nzg5QzYwLjE4MDMgMjkuNTE4MyA1OS42OTcgMjYuMTg5NiA1OS42OTcgMjIuNTI0OEM1OS42OTcgMTguODU4NCA2MC4xODAzIDE1LjUzMTQgNjIuNTkyMSAxMy4wNzE2QzY0LjIzMTYgMTEuNDMyMSA2Ni40OTc3IDEwLjM3MTkgNjkuMzkxMSAxMC4zNzE5QzcyLjI4NjIgMTAuMzcxOSA3NC41NTMxIDExLjQzMjEgNzYuMTk1MiAxMy4wNzE2Qzc4LjYwNTIgMTUuNTMwNSA3OS4wODc4IDE4Ljg1ODQgNzkuMDg3OCAyMi41MjQ4Qzc5LjA4NzggMjYuMTg5NiA3OC42MDUyIDI5LjUxODMgNzYuMTk0MyAzMS45Nzg5WiIgZmlsbD0iIzFBMUEyMiIvPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNODMuODM4OCAzNC4zOTA2SDg3LjMxMTZWMTAuNjU5OUg4My44Mzg4VjM0LjM5MDZaTTgzLjY0NDMgMy45MDcyNkg4Ny41NDk5VjBIODMuNjQ0M1YzLjkwNzI2WiIgZmlsbD0iIzFBMUEyMiIvPjxwYXRoIGQ9Ik0xMDguNTg4IDM0LjM4OThWMTkuNzc2M0MxMDguNTg4IDE1LjU3OTQgMTA2LjMyMyAxMy40NTczIDEwMi43NTMgMTMuNDU3M0M5OS4xODI1IDEzLjQ1NzMgOTYuODY5MyAxNS42MjgyIDk2Ljg2OTMgMTkuNzc2M1YzNC4zODk4SDkzLjM5NjVWMTAuNjU5MUg5Ni44NjkzVjEzLjI2NDVDOTguNTU2OSAxMS4zMzYxIDEwMC44NzIgMTAuMzcxOSAxMDMuNTI1IDEwLjM3MTlDMTA2LjA3OSAxMC4zNzE5IDEwOC4xNTUgMTEuMTQzMyAxMDkuNjAyIDEyLjU5MDhDMTExLjI5MSAxNC4yMjk1IDExMi4wNjEgMTYuNDQ3NSAxMTIuMDYxIDE5LjE5NjlWMzQuMzg5OEgxMDguNTg4WiIgZmlsbD0iIzFBMUEyMiIvPjxwYXRoIGQ9Ik0xMTcuMjEzIDMuMzc2NzVIMTIwLjY4NFYxMC44MDM5SDEyNS43NVYxMy40NTczSDEyMC42ODRWMjcuOTI2OEMxMjAuNjg0IDMwLjA5NTIgMTIxLjY5OCAzMS4zOTg3IDEyMy45MTcgMzEuMzk4N0gxMjUuNzVWMzQuMzg5OEgxMjMuMjg5QzExOS4yMzggMzQuMzg5OCAxMTcuMjEzIDMxLjU0MzUgMTE3LjIxMyAyOC4wMjM2VjMuMzc1MDZWMy4zNzY3NVoiIGZpbGw9IiMxQTFBMjIiLz48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE0Mi41MzggMTQuNjE2OUMxMzguNzczIDE0LjYxNjkgMTM4LjI4OCAxNy43MDA2IDEzOC4yODggMjEuODAxNUMxMzguMjg4IDI1LjkwMjQgMTM4Ljc3MyAyOS4wMzUgMTQyLjUzOCAyOS4wMzVDMTQ2LjI5NiAyOS4wMzUgMTQ2Ljc4IDI1LjkwMjQgMTQ2Ljc4IDIxLjgwMTVDMTQ2Ljc4IDE3LjcwMDYgMTQ2LjI5NiAxNC42MTY5IDE0Mi41MzggMTQuNjE2OVpNMTUwLjQ5NSAzMi40MTE3QzE0OS4wOTQgMzMuODA5NiAxNDYuODI2IDM0LjY4MDMgMTQ0LjM2OCAzNC42ODAzQzE0MS43MTMgMzQuNjgwMyAxMzkuODM0IDMzLjk1NjEgMTM4LjA5OSAzMi4wMjUyVjM0LjM4OThIMTMyLjAyMlYwLjA0OTY4MjhIMTM4LjI4OFYxMS40ODAxQzEzOS45MjkgOS42NDY4OSAxNDEuODE0IDguOTcyMzggMTQ0LjM2NyA4Ljk3MjM4QzE0Ni44MjYgOC45NzIzOCAxNDkuMDk0IDkuODM5NzIgMTUwLjQ5NSAxMS4yMzc2QzE1My4wMDEgMTMuNzQ3IDE1My4wNDcgMTguMDM5MSAxNTMuMDQ3IDIxLjgwMTVDMTUzLjA0NyAyNS41NjIyIDE1My4wMDEgMjkuOTAyMyAxNTAuNDk1IDMyLjQxMTdaIiBmaWxsPSIjMUExQTIyIi8+PC9zdmc+" alt="Point B" style="height:24px;width:auto;opacity:0.3">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNDUgNDUiIGZpbGw9Im5vbmUiPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNNDEuNDYyMiAzOS44NjRINDYuMzg4Nkw1Ni42MzU2IDcuNDYyMTVINTEuODA3N0w0NC40MTggMzEuNDkyN0wzNi45Mjk4IDcuNDYyMTVIMzEuMTE2NkwzMy41Nzk4IDE1LjI0MjVMMjguMTYwOCAzMS40OTI3TDIwLjc3MTEgNy40NjIxNUgxNC44NTk0TDI1LjEwNjQgMzkuODY0SDI5LjkzNDNMMzUuODQ2IDIyLjMzMzVMNDEuNDYyMiAzOS44NjRaTTY1LjcwMDIgMzkuNjY3MUw2Ny42NzA4IDM2LjgxMUg2OC4xNjM1TDY4Ljg1MzIgMzkuODY0SDc1LjQ1NDZMNzYuODM0IDM1LjUzMTZINzMuMDg5OVYyMi43Mjc1QzczLjA4OTkgMTYuNzE5OCA3MC4yMzI2IDE0LjI1NzcgNjMuNjMxMSAxNC4yNTc3SDU4LjUwNzZMNTcuMDI5NyAxOC42ODk2SDYzLjIzN0M2Ni4wOTQzIDE4LjY4OTYgNjcuNDczOCAxOS44NzE0IDY3LjQ3MzggMjIuNzI3NVYyMy45MDkzTDYxLjE2NzkgMjQuNjk4MkM1Ny40MjM4IDI1LjE5MDYgNTMuNTgxMiAyNi42Njc5IDUzLjU4MTIgMzEuNzg4MlYzMi42NzQ2QzUzLjU4MTIgMzcuMzAzNCA1Ni43MzQxIDM5Ljk2MzUgNjEuOTU2MSAzOS45NjM1QzYzLjMzNTUgNDAuMDYxIDY0LjUxNzkgMzkuOTYzNSA2NS43MDAyIDM5LjY2NzFaTTU5LjI5NTkgMzIuNTc3MVYzMS44ODY3QzU5LjI5NTkgMzAuMDE1NCA2MC41NzY3IDI5LjEzIDYyLjQ0ODggMjguODMzNkw2Ny40NzM4IDI4LjE0NTJWMzQuODQxM0M2Ni4wOTQzIDM1LjMzMzcgNjQuNjE2NCAzNS42MjkxIDYzLjEzODUgMzUuNjI5MUM2MC42NzUzIDM1LjYyOTEgNTkuMjk1OSAzNC4zNDg4IDU5LjI5NTkgMzIuNTc3MVpNOTAuNzI2NSAxOC41OTExTDkyLjEwNTkgMTQuMjU3N0g4NS44MDAxVjkuMzMzMzhIOTEuMDIyMUw5Mi40MDE1IDVIODYuNTg4M0M4Mi4yNTMxIDUgODAuMTg0IDcuNDYyMTUgODAuMTg0IDExLjAwNzZWMTQuMjU3N0g3Ni44MzRMNzUuNDU0NiAxOC41OTExSDgwLjE4NFYzOS44NjRIODUuODAwMVYxOC41OTExSDkwLjcyNjVaTTEwNy4wODMgMTkuMDgzNUwxMDguNjU5IDE0LjM1NjJIMTAxLjE3Mkw5OS44ODk3IDE3LjMxMDdIOTkuMjk4Nkw5OC4zMTMzIDE0LjM1NjJIOTQuNDcwNlYzOS44NjRIMTAwLjA4N1YxOS4wODM1SDEwNy4wODNaTTExOS4wMDQgMzkuNjY3MUwxMjAuOTc1IDM2LjgxMUgxMjEuNDY4TDEyMi4xNTcgMzkuODY0SDEyOC43NkwxMzAuMTM4IDM1LjUzMTZIMTI2LjM5NFYyMi43Mjc1QzEyNi4zOTQgMTYuNzE5OCAxMjMuNTM3IDE0LjI1NzcgMTE2LjkzNiAxNC4yNTc3SDExMS44MTJMMTEwLjMzNCAxOC42ODk2SDExNi41NDFDMTE5LjM5OSAxOC42ODk2IDEyMC43NzggMTkuODcxNCAxMjAuNzc4IDIyLjcyNzVWMjMuOTA5M0wxMTQuNDczIDI0LjY5ODJDMTEwLjcyOCAyNS4xOTA2IDEwNi44ODUgMjYuNjY3OSAxMDYuODg1IDMxLjc4ODJWMzIuNjc0NkMxMDYuODg1IDM3LjMwMzQgMTEwLjAzOSAzOS45NjM1IDExNS4yNiAzOS45NjM1QzExNi43MzggNDAuMDYxIDExNy45MjEgMzkuOTYzNSAxMTkuMDA0IDM5LjY2NzFaTTExMi42OTggMzIuNTc3MVYzMS44ODY3QzExMi42OTggMzAuMDE1NCAxMTMuOTggMjkuMTMgMTE1Ljg1MSAyOC44MzM2TDEyMC44NzcgMjguMTQ1MlYzNC44NDEzQzExOS40OTcgMzUuMzMzNyAxMTguMDE5IDM1LjYyOTEgMTE2LjU0MSAzNS42MjkxQzExMy45OCAzNS42MjkxIDExMi42OTggMzQuMzQ4OCAxMTIuNjk4IDMyLjU3NzFaIiBmaWxsPSIjMUExQTIyIi8+PC9zdmc+" alt="Wafra" style="height:24px;width:auto;opacity:0.3">
+      <svg class="h-full w-auto" viewBox="0 0 145 45" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" alt="RTS" style="height:24px;width:auto;opacity:0.3">
+        <path d="M46.8118 5.00006C46.435 5.02309 46.0583 5.06914 45.6815 5.06914C37.4166 5.06914 29.1634 5.06914 20.8984 5.06914C14.9881 5.06914 9.07785 5.06914 3.1558 5.06914C2.17861 5.06914 1.70767 5.3915 1.37801 6.31255C1.26028 6.64642 1.16609 6.9803 1.0719 7.30266C0.907075 6.70399 1.31915 5.64479 1.86072 5.24183C1.95491 5.17276 2.01378 5.08065 2.08442 5.00006C16.9896 5.00006 31.8948 5.00006 46.8 5.00006H46.8118Z" fill="currentColor"></path>
+        <path d="M114.553 5.00006C114.317 5.02309 114.082 5.06914 113.858 5.06914C104.145 5.06914 94.4319 5.06914 84.707 5.06914C84.4244 5.06914 84.1419 5.02309 83.8711 5.00006C94.1022 5.00006 104.333 5.00006 114.553 5.00006Z" fill="currentColor"></path>
+        <path d="M70.3313 5C70.0488 5.02303 69.778 5.06908 69.4954 5.06908C64.2209 5.06908 58.9464 5.06908 53.6719 5.06908C53.3893 5.06908 53.1068 5.02303 52.8242 5C58.6639 5 64.4917 5 70.3313 5Z" fill="currentColor"></path>
+        <path d="M0.742188 6.93433C1.01298 8.20076 1.06007 9.45568 0.742188 10.7221V6.93433Z" fill="currentColor"></path>
+        <path d="M52.59 39.9651C52.59 39.2283 52.59 38.526 52.59 37.8122C52.59 28.3946 52.59 18.9884 52.59 9.57078C52.59 8.22375 52.6017 6.88824 52.59 5.54122C52.59 5.27642 52.6488 5.19583 52.9432 5.19583C58.0764 5.21886 63.2096 5.23037 68.3428 5.21886C70.5916 5.21886 72.8167 5.35701 74.9477 6.15141C78.2443 7.37179 80.1398 9.68591 80.6814 13.0592C80.9875 14.9589 80.9169 16.8355 80.4224 18.6891C79.6571 21.5789 77.8087 23.5361 74.9713 24.6183C74.7476 24.6989 74.5357 24.7795 74.312 24.8716C74.312 24.8716 74.312 24.8946 74.2767 24.9407C77.2082 29.9143 80.1516 34.9224 83.1185 39.9651C82.9419 39.9651 82.8242 39.9882 82.6947 39.9882C80.1987 39.9882 77.7145 39.9882 75.2185 39.9882C74.9948 39.9882 74.8182 39.9767 74.6887 39.7464C73.1229 37.0869 71.5452 34.4389 69.9676 31.7909C68.8138 29.8452 67.6482 27.8995 66.4944 25.9538C66.3649 25.7351 66.2354 25.6545 65.9764 25.6545C64.0455 25.6545 62.1029 25.666 60.1603 25.6545C59.8777 25.6545 59.7953 25.7351 59.7953 25.9999C59.8071 30.536 59.8071 35.0721 59.8189 39.6082C59.8189 39.85 59.7835 39.9997 59.4774 39.9997C57.2169 39.9997 54.9682 39.9997 52.7077 39.9997C52.6724 39.9997 52.637 39.9882 52.5664 39.9767L52.59 39.9651ZM65.3288 11.7237V11.7467C63.6217 11.7467 61.9028 11.7467 60.1956 11.7467C59.9248 11.7467 59.8306 11.8158 59.8306 12.0921C59.8306 14.3372 59.8306 16.5937 59.8306 18.8388C59.8306 19.092 59.9366 19.1381 60.1603 19.1381C62.9506 19.1381 65.7291 19.1381 68.5194 19.1266C69.2965 19.1266 70.0735 19.1266 70.8506 19.046C72.5577 18.8848 73.7115 17.9753 74.1001 16.4786C74.2178 16.0066 74.2531 15.5 74.2296 15.0164C74.1825 13.6579 73.4761 12.7138 72.2045 12.1612C71.3804 11.8043 70.4974 11.7352 69.6026 11.7352C68.178 11.7352 66.7416 11.7352 65.3171 11.7352L65.3288 11.7237Z" fill="currentColor"></path>
+        <path d="M139.001 14.5677C138.765 14.3029 138.6 14.0957 138.412 13.9115C136.976 12.5529 135.245 11.8622 133.267 11.7585C131.854 11.6779 130.43 11.6895 129.052 12.1039C127.663 12.5184 126.733 13.3588 126.309 14.7289C126.003 15.7305 126.274 16.5595 127.015 17.2618C127.769 17.9641 128.723 18.344 129.712 18.5627C131.042 18.8736 132.396 19.0808 133.738 19.3226C136.269 19.7946 138.624 20.7042 140.731 22.1548C142.721 23.5248 143.804 25.436 144.099 27.7386C144.287 29.1317 144.358 30.5593 144.005 31.9524C143.451 34.1168 142.062 35.7402 140.296 37.0987C138.271 38.6529 135.963 39.597 133.42 39.9654C133.149 40 132.879 39.9885 132.608 39.9885C131.513 39.9885 130.406 39.9885 129.311 39.9885C125.096 40.0115 121.423 38.5954 118.162 36.0625C117.738 35.7402 117.349 35.3602 116.973 35.0379C118.597 33.4606 120.187 31.9063 121.717 30.4096C122.341 30.8817 122.954 31.4113 123.636 31.8488C124.979 32.6892 126.497 33.0806 128.051 33.3454C129.876 33.6448 131.701 33.6448 133.491 33.1612C134.915 32.7813 135.951 31.9754 136.328 30.5248C136.764 28.8208 135.963 27.1284 134.291 26.288C133.196 25.7353 132.019 25.459 130.806 25.3324C128.369 25.0791 126.003 24.6071 123.778 23.5824C123.048 23.2485 122.318 22.8686 121.635 22.4426C120.293 21.5907 119.386 20.3933 118.892 18.9081C118.303 17.1121 118.197 15.2815 118.562 13.4394C118.998 11.275 120.257 9.6056 122.023 8.2816C124.037 6.78491 126.262 5.70269 128.793 5.33427C129.676 5.20763 130.583 5.26519 131.478 5.25368C133.361 5.21914 135.233 5.31124 137.058 5.8063C139.354 6.41649 141.297 7.62536 143.051 9.14508C143.227 9.29475 143.392 9.46744 143.581 9.6056C143.828 9.76678 143.769 9.89343 143.581 10.0661C142.203 11.3901 140.837 12.7256 139.472 14.0611C139.33 14.1993 139.201 14.349 139.001 14.5792V14.5677Z" fill="currentColor"></path>
+        <path d="M103.078 40C102.172 40 101.324 40 100.476 40C99.0636 40 97.639 40 96.2262 40C95.9554 40 95.8612 39.9194 95.8612 39.6431C95.8612 30.5248 95.8612 21.4065 95.8612 12.2997C95.8612 11.6434 95.9318 11.747 95.2725 11.747C91.611 11.747 87.9494 11.747 84.2879 11.747C83.9818 11.747 83.8758 11.6779 83.8876 11.3671C83.9111 9.4214 83.9111 7.48721 83.8994 5.54151C83.8994 5.25369 84.0053 5.19612 84.2643 5.19612C90.0451 5.20763 95.8259 5.23066 101.607 5.23066C105.692 5.23066 109.766 5.23066 113.851 5.21915C114.122 5.21915 114.393 5.20763 114.663 5.18461C114.946 5.16158 115.028 5.28823 115.028 5.55302C115.017 6.90005 115.005 8.23556 115.005 9.58258C115.005 10.1928 115.017 10.803 115.052 11.4016C115.064 11.6779 114.97 11.7585 114.687 11.7585C111.061 11.747 107.435 11.747 103.808 11.7355C103.573 11.7355 103.337 11.7355 103.078 11.7355V40Z" fill="currentColor"></path>
+        <path d="M1.09408 10.4918C1.16472 10.722 1.20004 10.9523 1.29423 11.171C1.44728 11.5164 1.61211 11.8618 1.81226 12.1842C1.97709 12.4605 2.27143 12.5411 2.58931 12.449C2.88365 12.3684 2.96606 12.1266 2.96606 11.8503C2.96606 10.4803 2.96606 9.12172 2.97783 7.75167C2.97783 7.29115 3.00138 6.83063 2.97783 6.37011C2.96606 6.02472 2.90719 5.67933 2.8601 5.27637C2.94251 5.26486 3.09557 5.21881 3.24862 5.21881C11.0662 5.21881 18.8838 5.21881 26.7131 5.23032C33.059 5.23032 39.4049 5.23032 45.7508 5.23032C46.1275 5.23032 46.5043 5.2073 46.8811 5.19578C47.3167 5.18427 47.352 5.19578 47.352 5.63328C47.352 7.10694 47.352 8.5691 47.352 10.0428C47.352 10.7911 47.352 11.5395 47.3638 12.2763C47.3638 12.5526 47.2813 12.6447 46.9752 12.6447C32.5881 12.6447 18.2127 12.6447 3.82552 12.6447C3.34281 12.6447 2.87187 12.7138 2.38916 12.6792C2.15369 12.6677 1.85936 12.5526 1.7063 12.3799C1.23536 11.8503 0.98812 11.2171 1.08231 10.4918H1.09408Z" fill="currentColor"></path>
+        <path d="M30.915 21.8093C25.6876 21.8093 20.4484 21.8093 15.221 21.8093C15.0326 21.8093 14.8325 21.7978 14.6559 21.8323C14.1025 21.9474 13.7493 21.6711 13.4785 21.2567C12.9605 20.4623 12.8192 19.5758 12.7368 18.6662C12.6426 17.607 12.7368 16.5594 13.1371 15.5462C13.2548 15.2469 13.4079 14.959 13.5963 14.7058C13.8553 14.3489 14.2202 14.1877 14.703 14.2683C15.0915 14.3373 15.5036 14.3143 15.9039 14.3143C26.2763 14.3143 36.6369 14.3143 47.0093 14.3143C47.3507 14.3143 47.3625 14.464 47.3625 14.7173C47.3625 16.9623 47.3507 19.2189 47.3625 21.4639C47.3625 21.8208 47.1977 21.8208 46.9269 21.8208C42.3117 21.8208 37.6965 21.8208 33.0695 21.8208C32.3514 21.8208 31.6332 21.8208 30.9032 21.8208L30.915 21.8093ZM14.9149 18.0906C14.9149 17.0429 14.9149 16.0067 14.9149 14.959C14.9149 14.7979 14.8325 14.5215 14.7383 14.51C14.5264 14.464 14.2438 14.4755 14.0554 14.5791C13.6316 14.8209 13.4432 15.2584 13.2901 15.6959C12.9605 16.6975 12.831 17.7337 12.9369 18.7814C13.0194 19.5988 13.1724 20.4047 13.6433 21.0955C13.7846 21.3142 14.0201 21.5099 14.2556 21.6251C14.6559 21.8093 14.9149 21.6021 14.9149 21.1876C14.9149 20.1514 14.9149 19.1268 14.9149 18.0906Z" fill="currentColor"></path>
+        <path d="M36.8888 30.9617C33.5098 30.9617 30.1308 30.9617 26.7636 30.9617C26.3045 30.9617 25.81 30.5817 25.6452 29.96C25.445 29.2347 25.2802 28.4864 25.2095 27.738C25.1154 26.7249 25.1271 25.6887 25.5039 24.7216C25.6569 24.3186 25.8806 23.9272 26.1514 23.5933C26.2809 23.4321 26.5988 23.3631 26.8343 23.3515C27.3052 23.3285 27.7762 23.4091 28.2471 23.4091C34.487 23.4091 40.7152 23.4091 46.9551 23.4091C47.2965 23.4091 47.3907 23.5012 47.3907 23.8351C47.379 26.0686 47.3907 28.3137 47.3907 30.5472C47.3907 30.8811 47.3083 30.9617 46.9551 30.9617C43.5997 30.9501 40.2442 30.9617 36.9006 30.9617H36.8888ZM27.0815 27.1163H27.0462C27.0462 26.0571 27.0462 25.0094 27.0462 23.9502C27.0462 23.8121 26.952 23.5933 26.8578 23.5703C26.7048 23.5242 26.4575 23.5703 26.3516 23.6624C26.1279 23.9042 25.9159 24.1805 25.7982 24.4798C25.2566 25.7693 25.3273 27.1278 25.4568 28.4748C25.5039 29.0044 25.7158 29.5456 25.9277 30.0521C26.0337 30.3054 26.2809 30.5357 26.5164 30.7084C26.7754 30.9041 27.0226 30.7659 27.0697 30.4436C27.0933 30.3054 27.0933 30.1673 27.0933 30.0291C27.0933 29.0505 27.0933 28.0834 27.0933 27.1048L27.0815 27.1163Z" fill="currentColor"></path>
+        <path d="M42.094 40C40.5517 40 38.9976 40 37.4553 40C37.1845 40 36.9019 40 36.6547 39.9309C36.4781 39.8849 36.2897 39.7582 36.172 39.6201C35.6892 39.0099 35.5244 38.273 35.4538 37.5362C35.3243 36.1892 35.2536 34.8306 35.8187 33.5412C36.0071 33.1037 36.1837 32.6317 36.7371 32.482C36.8313 32.459 36.9255 32.4474 37.0079 32.4474C37.4788 32.482 37.938 32.5511 38.4089 32.5511C41.2463 32.5511 44.0719 32.5511 46.9093 32.5511C47.2508 32.5511 47.3685 32.6086 47.3685 32.977C47.345 35.1875 47.3567 37.4096 47.3685 39.6201C47.3685 39.9079 47.2625 40 46.98 40C45.3552 40 43.7187 40 42.094 40Z" fill="currentColor"></path>
+      </svg>
+      <svg class="h-full w-auto" viewBox="0 0 306 45" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" alt="Agile" style="height:24px;width:auto;opacity:0.3">
+        <path d="M115.801 9.15167H125.811V35.5617H132.427V9.15167H142.408V2.52081H119.052L115.801 9.15167Z" fill="currentColor"></path>
+        <path d="M164.225 13.6582C163.227 12.6381 162.058 11.873 160.717 11.2779C159.377 10.7112 157.923 10.3995 156.411 10.3995C155.584 10.3995 154.757 10.5128 153.959 10.7678C153.16 11.0229 152.362 11.4196 151.62 11.9863V1.0766H145.289V35.591H151.62V21.4792C151.62 20.8275 151.734 20.2324 151.991 19.6373C152.247 19.0706 152.59 18.5605 153.017 18.1355C153.445 17.7104 153.959 17.3704 154.557 17.1153C155.156 16.8603 155.784 16.747 156.44 16.747C157.096 16.747 157.694 16.8603 158.265 17.1153C158.835 17.3704 159.349 17.7104 159.776 18.1355C160.204 18.5605 160.546 19.0706 160.803 19.6373C161.06 20.2041 161.174 20.8275 161.174 21.4792H161.088V35.591H167.476V21.4792C167.476 19.949 167.191 18.5322 166.592 17.172C166.022 15.8402 165.223 14.6784 164.225 13.6582Z" fill="currentColor"></path>
+        <path d="M192.284 13.5455C191.144 12.412 189.803 11.5053 188.263 10.8818C186.723 10.2584 185.069 9.94672 183.301 9.94672C181.562 9.94672 179.907 10.2868 178.367 10.9385C176.828 11.5903 175.487 12.497 174.318 13.6589C173.177 14.8207 172.265 16.2092 171.58 17.7961C170.896 19.3829 170.582 21.1398 170.582 23.0101C170.582 24.852 170.924 26.5805 171.58 28.1674C172.236 29.7543 173.149 31.1428 174.318 32.3046C175.487 33.4664 176.828 34.3732 178.367 35.0533C179.907 35.7334 181.562 36.0451 183.301 36.0451C185.069 36.0451 186.723 35.705 188.263 35.0533C189.803 34.3732 191.144 33.4664 192.284 32.3046C193.425 31.1428 194.338 29.7543 194.994 28.1674C195.65 26.5805 195.992 24.852 195.992 23.0101C195.992 21.0548 195.65 19.2696 194.994 17.6544C194.309 16.0675 193.425 14.679 192.284 13.5455ZM189.09 25.7871C188.748 26.6089 188.292 27.3173 187.721 27.9124C187.151 28.5074 186.467 28.9608 185.725 29.2725C184.955 29.5842 184.157 29.7543 183.273 29.7543C182.389 29.7543 181.59 29.5842 180.82 29.2442C180.05 28.9042 179.394 28.4224 178.824 27.8274C178.253 27.2323 177.826 26.5238 177.483 25.7021C177.17 24.8803 176.999 24.0019 176.999 23.0384C176.999 22.0183 177.17 21.1115 177.483 20.2897C177.797 19.4679 178.253 18.7595 178.824 18.1644C179.394 17.5694 180.05 17.116 180.82 16.8043C181.59 16.4926 182.389 16.3225 183.273 16.3225C184.157 16.3225 184.955 16.4926 185.725 16.8043C186.495 17.116 187.151 17.5694 187.721 18.1644C188.292 18.7595 188.748 19.4679 189.09 20.2897C189.433 21.1115 189.575 22.0183 189.575 23.0384C189.604 24.0302 189.433 24.937 189.09 25.7871Z" fill="currentColor"></path>
+        <path d="M215.048 24.568C215.048 25.2197 214.933 25.8715 214.677 26.4949C214.42 27.1183 214.078 27.685 213.65 28.1668C213.222 28.6485 212.709 29.0452 212.139 29.3569C211.568 29.6686 210.941 29.8103 210.285 29.8103C209.629 29.8103 209.002 29.697 208.403 29.4703C207.832 29.2436 207.319 28.9035 206.891 28.4501C206.464 27.9967 206.121 27.4583 205.865 26.8066C205.608 26.1548 205.494 25.4181 205.494 24.568V10.9095H199.191V24.568C199.191 26.3249 199.477 27.9401 200.075 29.3569C200.646 30.7738 201.444 31.9923 202.471 32.9841C203.498 33.9759 204.667 34.7409 206.007 35.2794C207.348 35.8178 208.802 36.0728 210.313 36.0728C210.998 36.0728 211.682 35.9878 212.367 35.8178C213.051 35.6477 213.707 35.3927 214.335 35.1093C214.962 34.7976 215.589 34.4576 216.16 34.0609C216.73 33.6641 217.272 33.2108 217.785 32.7574L219.867 35.6477H221.407V10.9095H215.076V24.568H215.048Z" fill="currentColor"></path>
+        <path d="M246.269 13.8856C245.67 13.3188 245.042 12.8088 244.387 12.327C243.702 11.8453 243.018 11.4486 242.276 11.0802C241.535 10.7402 240.765 10.4568 239.966 10.2584C239.168 10.0601 238.369 9.94672 237.571 9.94672C235.831 9.94672 234.177 10.2868 232.637 10.9385C231.097 11.5903 229.757 12.5254 228.587 13.6872C227.447 14.849 226.534 16.2375 225.85 17.8244C225.194 19.4113 224.852 21.1398 224.852 23.0101C224.852 25.0503 225.194 26.8639 225.85 28.4791C226.506 30.0943 227.418 31.4545 228.587 32.5596C229.728 33.6648 231.097 34.5432 232.637 35.1383C234.177 35.7334 235.831 36.0451 237.571 36.0451C238.084 36.0451 238.654 36.0167 239.282 35.9601C239.881 35.9034 240.48 35.79 241.05 35.62C241.62 35.45 242.134 35.2516 242.59 34.9966C243.046 34.7416 243.417 34.4299 243.645 34.0048C243.474 34.6282 243.246 35.2233 242.961 35.79C242.675 36.3568 242.305 36.8669 241.82 37.2919C241.335 37.717 240.765 38.0853 240.052 38.3404C239.339 38.5954 238.512 38.7088 237.514 38.7088L234.377 38.6521V44.9429L237.542 44.9996C239.282 44.9996 240.936 44.6595 242.476 44.0078C244.016 43.356 245.356 42.4492 246.525 41.3158C247.666 40.1823 248.579 38.8504 249.263 37.3202C249.919 35.79 250.261 34.1748 250.261 32.4179V10.8818H248.721L246.269 13.8856ZM243.388 25.5321C243.046 26.3255 242.59 27.0623 242.02 27.6857C241.449 28.3091 240.765 28.8191 240.023 29.1875C239.282 29.5559 238.455 29.7543 237.571 29.7543C236.687 29.7543 235.888 29.5842 235.118 29.2725C234.348 28.9608 233.692 28.5074 233.122 27.9124C232.551 27.3173 232.124 26.6372 231.781 25.8154C231.468 24.9937 231.297 24.0585 231.297 23.0384C231.297 21.9616 231.468 20.9981 231.781 20.1764C232.095 19.3263 232.551 18.6462 233.122 18.0794C233.692 17.5127 234.348 17.0876 235.118 16.7759C235.888 16.4926 236.687 16.3509 237.571 16.3509C238.455 16.3509 239.253 16.5492 240.023 16.9176C240.793 17.286 241.449 17.7961 242.02 18.4195C242.59 19.0429 243.046 19.7513 243.388 20.5731C243.731 21.3665 243.873 22.2166 243.873 23.0667C243.873 23.9169 243.702 24.7386 243.388 25.5321Z" fill="currentColor"></path>
+        <path d="M274.045 13.6582C273.047 12.6381 271.878 11.873 270.538 11.2779C269.197 10.7112 267.743 10.3995 266.231 10.3995C265.404 10.3995 264.577 10.5128 263.779 10.7678C262.98 11.0229 262.182 11.4196 261.44 11.9863V1.0766H255.109V35.591H261.44V21.4792C261.44 20.8275 261.554 20.2324 261.811 19.6373C262.068 19.0706 262.41 18.5605 262.838 18.1355C263.266 17.7104 263.779 17.3704 264.378 17.1153C264.977 16.8603 265.604 16.747 266.26 16.747C266.916 16.747 267.515 16.8603 268.085 17.1153C268.656 17.3704 269.169 17.7104 269.597 18.1355C270.024 18.5605 270.367 19.0706 270.623 19.6373C270.88 20.2041 270.994 20.8275 270.994 21.4792H270.937V35.591H277.325V21.4792C277.325 19.949 277.04 18.5322 276.441 17.172C275.842 15.8402 275.044 14.6784 274.045 13.6582Z" fill="currentColor"></path>
+        <path d="M298.915 17.2287V10.9662H289.304V1.0766H283.002V10.9379H279.922V17.2003H283.002V24.5396C283.002 26.0698 283.287 27.4867 283.886 28.8185C284.485 30.1503 285.255 31.3405 286.281 32.3323C287.308 33.3524 288.477 34.1175 289.818 34.7126C291.158 35.3077 292.612 35.591 294.124 35.591H298.915V29.3286H294.124C293.468 29.3286 292.841 29.2152 292.242 28.9602C291.643 28.7052 291.13 28.3651 290.702 27.9401C290.274 27.515 289.932 27.0049 289.675 26.4382C289.418 25.8715 289.304 25.248 289.304 24.568V17.2287H298.915Z" fill="currentColor"></path>
+        <path d="M63.0929 13.8862C62.494 13.3195 61.8666 12.8094 61.2107 12.3277C60.5263 11.846 59.8418 11.4492 59.1004 11.0809C58.3589 10.7408 57.5889 10.4575 56.7904 10.2591C55.9919 10.0607 55.1934 9.94739 54.3949 9.94739C52.6553 9.94739 51.0012 10.2874 49.4612 10.9392C47.9213 11.5909 46.5809 12.5261 45.4117 13.6879C44.2709 14.8497 43.3584 16.2382 42.6739 17.8251C42.018 19.4119 41.6758 21.1405 41.6758 23.0107C41.6758 25.051 42.018 26.8646 42.6739 28.4798C43.3298 30.095 44.2424 31.4552 45.4117 32.5603C46.5524 33.6654 47.9213 34.5439 49.4612 35.139C51.0012 35.734 52.6553 36.0457 54.3949 36.0457C54.9082 36.0457 55.4786 36.0174 56.106 35.9607C56.7048 35.9041 57.3037 35.7907 57.8741 35.6207C58.4445 35.4507 58.9578 35.2523 59.4141 34.9973C59.8704 34.7422 60.2411 34.4305 60.4692 34.0055C60.2981 34.6289 60.07 35.224 59.7848 35.7907C59.4996 36.3575 59.1289 36.8675 58.6441 37.2926C58.1593 37.7176 57.5889 38.086 56.876 38.341C56.163 38.5961 55.336 38.7094 54.3378 38.7094L51.2008 38.6528V44.9436L54.3664 45.0002C56.106 45.0002 57.76 44.6602 59.3 44.0084C60.84 43.3567 62.1803 42.4499 63.3496 41.3164C64.4903 40.183 65.4029 38.8511 66.0873 37.3209C66.7432 35.7907 67.0855 34.1755 67.0855 32.4186V10.8825H65.5455L63.0929 13.8862ZM60.2126 25.5327C59.8704 26.3262 59.4141 27.0629 58.8437 27.6863C58.2733 28.3098 57.5889 28.8198 56.8474 29.1882C56.106 29.5566 55.2789 29.7549 54.3949 29.7549C53.5108 29.7549 52.7123 29.5849 51.9423 29.2732C51.1723 28.9615 50.5164 28.5081 49.946 27.913C49.3757 27.318 48.9479 26.6379 48.6057 25.8161C48.292 24.9943 48.1209 24.0592 48.1209 23.0391C48.1209 21.9623 48.292 20.9988 48.6057 20.177C48.9194 19.3269 49.3757 18.6468 49.946 18.0801C50.5164 17.5134 51.1723 17.0883 51.9423 16.7766C52.7123 16.4932 53.5108 16.3515 54.3949 16.3515C55.2789 16.3515 56.0775 16.5499 56.8474 16.9183C57.6174 17.2867 58.2733 17.7967 58.8437 18.4201C59.4141 19.0436 59.8704 19.752 60.2126 20.5738C60.5548 21.3672 60.6974 22.2173 60.6974 23.0674C60.6974 23.9175 60.5548 24.7393 60.2126 25.5327Z" fill="currentColor"></path>
+        <path d="M78.3217 10.9102H71.9336V35.6201H78.3217V10.9102Z" fill="currentColor"></path>
+        <path d="M78.1549 1.24683C77.7557 0.878447 77.3279 0.56674 76.7861 0.340044C76.2727 0.113348 75.7024 0 75.132 0C74.5617 0 73.9913 0.113348 73.478 0.340044C72.9646 0.56674 72.5084 0.85011 72.1376 1.24683C71.7669 1.64355 71.4532 2.0686 71.225 2.57867C70.9969 3.08873 70.8828 3.62713 70.8828 4.19387C70.8828 4.78895 70.9969 5.32735 71.225 5.83742C71.4532 6.34748 71.7384 6.80088 72.1376 7.16926C72.5369 7.53764 72.9646 7.84934 73.478 8.07604C73.9913 8.30274 74.5617 8.41608 75.132 8.41608C75.7024 8.41608 76.2727 8.30274 76.7861 8.07604C77.2994 7.84934 77.7557 7.56597 78.1549 7.16926C78.5542 6.77254 78.8394 6.34748 79.0675 5.83742C79.2957 5.32735 79.4097 4.78895 79.4097 4.19387C79.4097 3.62713 79.2957 3.08873 79.0675 2.57867C78.8394 2.0686 78.5257 1.61521 78.1549 1.24683Z" fill="currentColor"></path>
+        <path d="M89.5326 1.07681H83.1445V35.5913H89.5326V1.07681Z" fill="currentColor"></path>
+        <path d="M117.419 17.6834C116.763 16.0682 115.851 14.708 114.71 13.5462C113.569 12.4127 112.229 11.5059 110.689 10.8825C109.149 10.2591 107.495 9.94739 105.727 9.94739C103.987 9.94739 102.333 10.2874 100.793 10.9392C99.2533 11.5909 97.9129 12.4977 96.7437 13.6595C95.603 14.8213 94.6904 16.2099 94.0059 17.7967C93.3215 19.3836 93.0078 21.1405 93.0078 23.0107C93.0078 24.8526 93.35 26.5812 94.0059 28.1681C94.6619 29.7549 95.5744 31.1435 96.7437 32.3053C97.9129 33.4671 99.2533 34.3739 100.793 35.054C101.449 35.3373 102.105 35.564 102.79 35.7057L105.727 29.7266C104.871 29.7266 104.044 29.5566 103.274 29.2165C102.504 28.8765 101.848 28.3948 101.278 27.7997C100.708 27.2046 100.28 26.4962 99.9377 25.6744C99.8522 25.5044 99.7951 25.306 99.7381 25.1077H114.026H118.246C118.36 24.4276 118.389 23.7192 118.389 23.0107C118.417 21.0838 118.075 19.2703 117.419 17.6834ZM99.7096 20.9421C99.7666 20.7154 99.8522 20.4887 99.9377 20.2904C100.251 19.4686 100.708 18.7602 101.278 18.1651C101.848 17.57 102.504 17.1166 103.274 16.8049C104.044 16.4932 104.843 16.3232 105.727 16.3232C106.611 16.3232 107.409 16.4932 108.179 16.8049C108.949 17.1166 109.605 17.57 110.176 18.1651C110.746 18.7602 111.202 19.4686 111.545 20.2904C111.63 20.5171 111.716 20.7154 111.773 20.9421H99.7096Z" fill="currentColor"></path>
+        <path d="M7.08594 35.5924H21.4591L24.5105 29.3299H17.324L24.5105 14.623L34.8056 35.5924H41.9637L24.5105 0.00115967L7.08594 35.5924Z" fill="currentColor"></path>
+      </svg>
+    </div>
+    <div style="margin-top:20px;font-size:12px;color:var(--icalia-text-gray)">Series A startups to Fortune 1000 enterprises across SaaS, Fintech, Healthcare, Energy, and Logistics.</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!--  SLIDE 11 · CONTACT / CTA              -->
+<!-- ═══════════════════════════════════════ -->
+<section class="slide slide--navy">
+  <div class="dot-grid" style="bottom:0;right:0;width:450px;height:450px;opacity:0.2"></div>
+  <div class="section-label">Ready when you are</div>
+  <h1>This isn't for <span class="coral italic">everyone.</span></h1>
+  <p class="subtitle" style="max-width:560px">If you're a technical founder, a Chief or VP of Technology, or a leader who believes the craft still matters — you are not alone.</p>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-label">Email</div>
+      <div class="contact-value"><a href="mailto:sales@icalialabs.com">sales@icalialabs.com</a></div>
+    </div>
+    <div>
+      <div class="contact-label">Web</div>
+      <div class="contact-value"><a href="https://icalialabs.com" target="_blank">icalialabs.com</a></div>
+    </div>
+    <div>
+      <div class="contact-label">Austin, TX — US HQ</div>
+      <div class="contact-value">801 Barton Springs Rd, Austin TX 78704</div>
+    </div>
+    <div>
+      <div class="contact-label">Monterrey, MX — Engineering Hub</div>
+      <div class="contact-value">Av. Eugenio Garza Sada #3820, Monterrey NL 64849</div>
+    </div>
+  </div>
+  <div style="margin-top:40px;display:flex;gap:12px">
+    <a class="cta-btn" href="https://calendly.com/charlie-icalialabs/30min">Start the Conversation</a>
+    <a class="cta-btn cta-btn--outline" href="https://icalialabs.com" target="_blank">Visit icalialabs.com →</a>
+  </div>
+  <div style="margin-top:32px;display:flex;gap:16px;align-items:center">
+    <a href="https://github.com/icalialabs" target="_blank" rel="noopener" title="GitHub" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--icalia-navy);color:var(--icalia-white);text-decoration:none;transition:all 0.2s;border:1.5px solid transparent">
+      <svg width="22" height="22" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6C29.304 70.67 17.9 66.348 17.9 47.243c0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.57 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 19.187-11.566 23.345-22.61 24.567 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/>
+      </svg>
+    </a>
+    <a href="https://linkedin.com/company/icalia-labs" target="_blank" rel="noopener" title="LinkedIn" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--icalia-navy);color:var(--icalia-white);text-decoration:none;transition:all 0.2s;border:1.5px solid transparent">
+      <svg width="22" height="22" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.475-2.236-1.986-2.236-1.081 0-1.722.722-2.004 1.418-.103.249-.129.597-.129.946v5.441h-3.586V9h3.441v1.561h.049c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.931-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.134-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
+      </svg>
+    </a>
+    <a href="https://clutch.co/mx/developers/artificial-intelligence" target="_blank" rel="noopener" title="Clutch" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;background:var(--icalia-navy);color:var(--icalia-white);text-decoration:none;transition:all 0.2s;border:1.5px solid transparent;font-weight:700;font-size:16px">
+      C
+    </a>
+  </div>
+  <div style="margin-top:48px;font-size:12px;opacity:0.2;letter-spacing:0.5px;font-family:var(--icalia-font-display);font-style:italic">
+    Engineers who multiply.
+  </div>
+</section>
+
+</div><!-- /deck -->
+
+<script>
+const TOTAL = 11;
+let current = 0;
+const slides   = document.querySelectorAll('.slide');
+const bar      = document.getElementById('bar');
+const counter  = document.getElementById('num');
+const prevBtn  = document.getElementById('pb');
+const nextBtn  = document.getElementById('nb');
+
+function show() {
+  slides.forEach(s => s.classList.remove('is-active'));
+  slides[current].classList.add('is-active');
+  // Scroll to top of new slide
+  slides[current].scrollTop = 0;
+  bar.style.width = ((current + 1) / TOTAL * 100) + '%';
+  counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + TOTAL;
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === TOTAL - 1;
+}
+
+function go(direction) {
+  const next = current + direction;
+  if (next >= 0 && next < TOTAL) {
+    current = next;
+    show();
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) go(diff > 0 ? 1 : -1);
+});
+
+show();
+</script>
+</body>
+</html>
