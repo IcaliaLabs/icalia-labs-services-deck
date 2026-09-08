@@ -8,11 +8,16 @@ published via GitHub Pages.
 ## Structure
 
 ```
-index.html            → the hub / landing page (lists all collateral)
+index.html                 → the hub / landing page (lists all collateral)
 collateral/
-  services-deck.html  → Services Overview deck
-  talent-engine.html  → Talent Operations Playbook
+  services-deck.html       → Services Overview deck
+  placements.html          → Placements deck (cost-plus & build-operate-transfer)
+  talent-engine.html       → Talent Operations Playbook
+  icalia-talent-map.html   → Talent Distribution
 ```
+
+Collateral files are fully self-contained — images are embedded as data URIs, so a
+file can be opened straight from disk or emailed as an attachment and still render.
 
 The hub reads a small manifest (the `COLLATERAL` array inside `index.html`) and
 renders a card for each item.
